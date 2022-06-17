@@ -1,11 +1,12 @@
 package com.cubetiq.blog.api.model.entity
 
+import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
 import org.hibernate.Hibernate
-import javax.persistence.Column
-import javax.persistence.Entity
+import javax.persistence.*
 
 @Entity
+@Table(name = TableConstant.USER)
 open class UserEntity constructor(
     @Column(nullable = false, unique = true, length = 30)
     open var username: String? = null,
@@ -17,7 +18,25 @@ open class UserEntity constructor(
     open var enabled: Boolean? = true,
 
     @Column(nullable = false)
-    open var enabledUser: Boolean? = true
+    open var enabledUser: Boolean? = true,
+
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.DETACH, CascadeType.REFRESH]
+    )
+    @JoinTable(
+        name = "userRole",
+        joinColumns = [JoinColumn(name = "userId")],
+        inverseJoinColumns = [JoinColumn(name = "roleId")]
+    )
+    open var roles: MutableList<RoleEntity>? = mutableListOf(),
+
+    @OneToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.REFRESH, CascadeType.DETACH],
+        mappedBy = "user"
+    )
+    open var post: MutableList<PostEntity>? = mutableListOf(),
 ): BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
