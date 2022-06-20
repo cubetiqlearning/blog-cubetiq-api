@@ -13,3 +13,6 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
