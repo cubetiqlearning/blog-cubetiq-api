@@ -2,6 +2,7 @@ package com.cubetiq.blog.api.model.entity
 
 import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -22,6 +23,7 @@ class PostEntity(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH]
     )
     @JoinColumn(name = "categoryId")
+    @JsonIgnoreProperties("post")
     open var category: CategoryEntity? = null,
 
     @ManyToOne(

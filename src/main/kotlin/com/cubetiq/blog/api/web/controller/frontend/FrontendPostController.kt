@@ -1,8 +1,9 @@
-package com.cubetiq.blog.api.web.controller.backend
+package com.cubetiq.blog.api.web.controller.frontend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
-import com.cubetiq.blog.api.model.request.CategoryRequest
-import com.cubetiq.blog.api.service.CategoryService
+import com.cubetiq.blog.api.model.request.PostRequest
+import com.cubetiq.blog.api.model.response.PostResponse
+import com.cubetiq.blog.api.service.PostService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -11,61 +12,65 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @Api(
-    tags = ["Backend Category"],
-    description = "Welcome to backend category api"
+    tags = ["Frontend Post"],
+    description = "Welcome to frontend post api"
 )
 @RestController
-@RequestMapping(value = [RestUriConstant.Backend.CATEGORY])
-class BackendCategoryController @Autowired constructor(
-    private val categoryService: CategoryService,
+@RequestMapping(RestUriConstant.Frontend.POST)
+class FrontendPostController @Autowired constructor(
+    private val postService: PostService,
 ) {
     @PostMapping
     fun create(
-        @RequestBody request: CategoryRequest
+        @RequestBody request: PostRequest
     ): ResponseEntity<Any> {
-        val data = categoryService.create(request)
+        val data = postService.create(request)
 
-        return ResponseEntity.ok(data)
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(PostResponse.toEntity(data))
     }
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
-        @RequestBody request: CategoryRequest,
+        @RequestBody request: PostRequest,
     ): ResponseEntity<Any> {
-        val data = categoryService.update(id, request)
+        val data = postService.update(id, request)
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(PostResponse.toEntity(data))
     }
 
     @GetMapping("/{id}")
     fun findOne(
         @PathVariable id: Long,
     ): ResponseEntity<Any> {
-        val data = categoryService.findById(id)
-            ?: throw Exception("Category not found!")
+        val data = postService.findById(id)
+            ?: throw Exception("Post not found!")
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(PostResponse.toEntity(data))
     }
 
     @DeleteMapping("/{id}")
     fun delete(
         @PathVariable id: Long,
     ): ResponseEntity<Any> {
-        val data = categoryService.softDelete(id)
+        val data = postService.softDelete(id)
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(PostResponse.toEntity(data))
     }
 
     @GetMapping
     fun findAllAvailable(): ResponseEntity<Any> {
-        val data = categoryService.findAllAvailable(Pageable.ofSize(2))
+        val data = postService.findAllAvailable(Pageable.ofSize(20)).map {
+            PostResponse.toEntity(it)
+        }
 
         return ResponseEntity
             .status(HttpStatus.OK)
