@@ -2,7 +2,7 @@ package com.cubetiq.blog.api.model.entity
 
 import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonBackReference
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -23,7 +23,7 @@ class PostEntity(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH]
     )
     @JoinColumn(name = "categoryId")
-    @JsonIgnoreProperties("post")
+    @JsonBackReference
     open var category: CategoryEntity? = null,
 
     @ManyToOne(
@@ -31,8 +31,9 @@ class PostEntity(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH]
     )
     @JoinColumn(name = "userId")
+    @JsonBackReference
     open var user: UserEntity? = null,
-): BaseEntity<Long>() {
+) : BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false

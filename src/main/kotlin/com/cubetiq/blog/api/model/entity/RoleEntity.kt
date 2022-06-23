@@ -2,6 +2,7 @@ package com.cubetiq.blog.api.model.entity
 
 import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonBackReference
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -19,8 +20,9 @@ open class RoleEntity constructor(
         cascade = [CascadeType.DETACH, CascadeType.REFRESH],
         mappedBy = "roles"
     )
+    @JsonBackReference
     open var users: MutableList<UserEntity>? = mutableListOf(),
-): BaseEntity<Long>() {
+) : BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false

@@ -2,10 +2,13 @@ package com.cubetiq.blog.api.web.controller.backend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
 import com.cubetiq.blog.api.model.request.CategoryRequest
+import com.cubetiq.blog.api.model.response.CategoryResponse
 import com.cubetiq.blog.api.service.CategoryService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -25,7 +28,9 @@ class BackendCategoryController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = categoryService.create(request)
 
-        return ResponseEntity.ok(data)
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(CategoryResponse.toEntity(data))
     }
 
     @PutMapping("/{id}")
@@ -37,7 +42,7 @@ class BackendCategoryController @Autowired constructor(
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(CategoryResponse.toEntity(data))
     }
 
     @GetMapping("/{id}")
@@ -49,7 +54,7 @@ class BackendCategoryController @Autowired constructor(
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(CategoryResponse.toEntity(data))
     }
 
     @DeleteMapping("/{id}")
@@ -60,12 +65,31 @@ class BackendCategoryController @Autowired constructor(
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(data)
+            .body(CategoryResponse.toEntity(data))
     }
 
     @GetMapping
-    fun findAllAvailable(): ResponseEntity<Any> {
-        val data = categoryService.findAllAvailable(Pageable.ofSize(2))
+    fun findAllAvailable(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "20") size: Int,
+        @RequestParam(required = false, defaultValue = "id") sort: String,
+        @RequestParam(required = false, defaultValue = "desc") sortBy: String,
+        @RequestParam(required = false, defaultValue = "false") paged: Boolean,
+    ): ResponseEntity<Any> {
+        val data = if (paged) {
+            categoryService.findAllAvailable(Pageable.unpaged()).map {
+                CategoryResponse.toEntity(it)
+            }
+        } else {
+            val sb = if (sortBy == "desc") {
+                Sort.by(sort).descending()
+            } else {
+                Sort.by(sort).ascending()
+            }
+            categoryService.findAllAvailable(PageRequest.of(page, size, sb)).map {
+                CategoryResponse.toEntity(it)
+            }
+        }
 
         return ResponseEntity
             .status(HttpStatus.OK)

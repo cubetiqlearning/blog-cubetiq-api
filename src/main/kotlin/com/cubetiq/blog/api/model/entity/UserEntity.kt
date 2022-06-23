@@ -2,6 +2,7 @@ package com.cubetiq.blog.api.model.entity
 
 import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -29,6 +30,7 @@ open class UserEntity constructor(
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "roleId")]
     )
+    @JsonManagedReference
     open var roles: MutableList<RoleEntity>? = mutableListOf(),
 
     @OneToMany(
@@ -36,6 +38,7 @@ open class UserEntity constructor(
         cascade = [CascadeType.REFRESH, CascadeType.DETACH],
         mappedBy = "user"
     )
+    @JsonManagedReference
     open var post: MutableList<PostEntity>? = mutableListOf(),
 ): BaseEntity<Long>() {
     override fun equals(other: Any?): Boolean {

@@ -6,7 +6,9 @@ import com.cubetiq.blog.api.model.response.PostResponse
 import com.cubetiq.blog.api.service.PostService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -67,9 +69,26 @@ class FrontendPostController @Autowired constructor(
     }
 
     @GetMapping
-    fun findAllAvailable(): ResponseEntity<Any> {
-        val data = postService.findAllAvailable(Pageable.ofSize(20)).map {
-            PostResponse.toEntity(it)
+    fun findAllAvailable(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "20") size: Int,
+        @RequestParam(required = false, defaultValue = "id") sort: String,
+        @RequestParam(required = false, defaultValue = "desc") sortBy: String,
+        @RequestParam(required = false, defaultValue = "false") paged: Boolean,
+    ): ResponseEntity<Any> {
+        val data = if (paged) {
+            postService.findAllAvailable(Pageable.unpaged()).map {
+                PostResponse.toEntity(it)
+            }
+        } else {
+            val sb = if (sortBy == "desc") {
+                Sort.by(sort).descending()
+            } else {
+                Sort.by(sort).ascending()
+            }
+            postService.findAllAvailable(PageRequest.of(page, size, sb)).map {
+                PostResponse.toEntity(it)
+            }
         }
 
         return ResponseEntity
