@@ -1,6 +1,7 @@
 package com.cubetiq.blog.api.web.controller.backend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
+import com.cubetiq.blog.api.infrastructure.model.response.BodyResponse
 import com.cubetiq.blog.api.model.request.CategoryRequest
 import com.cubetiq.blog.api.model.response.CategoryResponse
 import com.cubetiq.blog.api.service.CategoryService
@@ -28,9 +29,7 @@ class BackendCategoryController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = categoryService.create(request)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Create Successful")
     }
 
     @PutMapping("/{id}")
@@ -40,9 +39,7 @@ class BackendCategoryController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = categoryService.update(id, request)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Update Successful")
     }
 
     @GetMapping("/{id}")
@@ -52,9 +49,7 @@ class BackendCategoryController @Autowired constructor(
         val data = categoryService.findById(id)
             ?: throw Exception("Category not found!")
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Find one Successful")
     }
 
     @DeleteMapping("/{id}")
@@ -63,9 +58,7 @@ class BackendCategoryController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = categoryService.softDelete(id)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(CategoryResponse.toEntity(data))
+        return BodyResponse.success(CategoryResponse.toEntity(data), message = "Delete Successful")
     }
 
     @GetMapping
@@ -91,8 +84,6 @@ class BackendCategoryController @Autowired constructor(
             }
         }
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(data.content)
+        return BodyResponse.success(data, message = "Find all Successful")
     }
 }

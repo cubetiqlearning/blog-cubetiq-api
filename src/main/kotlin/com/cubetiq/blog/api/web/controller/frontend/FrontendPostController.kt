@@ -1,6 +1,7 @@
 package com.cubetiq.blog.api.web.controller.frontend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
+import com.cubetiq.blog.api.infrastructure.model.response.BodyResponse
 import com.cubetiq.blog.api.model.request.PostRequest
 import com.cubetiq.blog.api.model.response.PostResponse
 import com.cubetiq.blog.api.service.PostService
@@ -28,9 +29,7 @@ class FrontendPostController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = postService.create(request)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Create Successful")
     }
 
     @PutMapping("/{id}")
@@ -40,9 +39,7 @@ class FrontendPostController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = postService.update(id, request)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Update Successful")
     }
 
     @GetMapping("/{id}")
@@ -52,9 +49,7 @@ class FrontendPostController @Autowired constructor(
         val data = postService.findById(id)
             ?: throw Exception("Post not found!")
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+        return BodyResponse.success(PostResponse.toEntity(data), message = "Find One Successful")
     }
 
     @DeleteMapping("/{id}")
@@ -63,9 +58,7 @@ class FrontendPostController @Autowired constructor(
     ): ResponseEntity<Any> {
         val data = postService.softDelete(id)
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(PostResponse.toEntity(data))
+       return BodyResponse.success(PostResponse.toEntity(data), message = "Delete Successful")
     }
 
     @GetMapping
@@ -91,8 +84,6 @@ class FrontendPostController @Autowired constructor(
             }
         }
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(data.content)
+        return BodyResponse.success(data, message = "Find all Successful")
     }
 }
