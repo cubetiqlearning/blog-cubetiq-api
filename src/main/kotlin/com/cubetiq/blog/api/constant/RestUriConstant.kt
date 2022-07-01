@@ -11,5 +11,6 @@ object RestUriConstant {
     object Frontend {
         const val INDEX = "$IND/frontend"
         const val POST = "$INDEX/post"
+        const val CATEGORY = "$INDEX/category"
     }
 }
