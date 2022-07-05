@@ -7,6 +7,8 @@ data class PostResponse(
     var title: String? = null,
     var description: String? = null,
     var attachment: String? = null,
+    var categoryName: String? = null,
+    var username: String? = null,
 ) {
     companion object {
         fun toEntity(entity: PostEntity?): PostResponse? {
@@ -16,7 +18,9 @@ data class PostResponse(
                 id = entity.id,
                 title = entity.title,
                 description = entity.description,
-                attachment = entity.attachment
+                attachment = entity.attachment,
+                categoryName = entity.category?.name,
+                username = entity.user?.username
             )
         }
     }

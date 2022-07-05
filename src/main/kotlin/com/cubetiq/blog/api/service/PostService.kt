@@ -21,4 +21,6 @@ interface PostService {
     fun findAllAvailable(): MutableList<PostEntity>
 
     fun findAllAvailable(pageable: Pageable): Page<PostEntity>
+
+    fun findAllAvailable(categoryId: Long, pageable: Pageable): Page<PostEntity>
 }

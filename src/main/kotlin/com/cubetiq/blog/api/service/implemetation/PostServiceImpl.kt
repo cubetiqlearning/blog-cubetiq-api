@@ -80,4 +80,8 @@ class PostServiceImpl @Autowired constructor(
     override fun findAllAvailable(pageable: Pageable): Page<PostEntity> {
         return postRepository.queryAllByDeletedAtIsNull(pageable)
     }
+
+    override fun findAllAvailable(categoryId: Long, pageable: Pageable): Page<PostEntity> {
+        return postRepository.queryAllByCategoryIdAndDeletedAtIsNull(categoryId, pageable)
+    }
 }

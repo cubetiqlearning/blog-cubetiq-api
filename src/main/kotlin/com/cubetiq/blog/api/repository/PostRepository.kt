@@ -13,4 +13,6 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
     fun queryAllByDeletedAtIsNull(): MutableList<PostEntity>
 
     fun queryAllByDeletedAtIsNull(pageable: Pageable): Page<PostEntity>
+
+    fun queryAllByCategoryIdAndDeletedAtIsNull(categoryId: Long, pageable: Pageable): Page<PostEntity>
 }
