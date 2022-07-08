@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @Api(
@@ -23,6 +24,7 @@ class BackendCategoryController @Autowired constructor(
     private val categoryService: CategoryService,
 ) {
     @PostMapping
+    @PreAuthorize("@auth.enable() or isAnonymous()")
     fun create(
         @RequestBody request: CategoryRequest
     ): ResponseEntity<Any> {
