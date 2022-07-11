@@ -1,5 +1,6 @@
 package com.cubetiq.blog.api.service.implemetation
 
+import com.cubetiq.blog.api.exception.AlreadyExistsException
 import com.cubetiq.blog.api.model.entity.CategoryEntity
 import com.cubetiq.blog.api.model.request.CategoryRequest
 import com.cubetiq.blog.api.repository.CategoryRepository
@@ -17,7 +18,7 @@ class CategoryServiceImpl @Autowired constructor(
 ) : CategoryService {
     override fun create(request: CategoryRequest): CategoryEntity? {
         if (existsByName(request.name!!))
-            throw Exception("Category name already exists!")
+            throw AlreadyExistsException("Category name already exists!")
 
         return categoryRepository.save(request.toEntity())
     }

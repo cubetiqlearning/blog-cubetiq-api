@@ -1,5 +1,7 @@
 package com.cubetiq.blog.api.web
 
+import com.cubetiq.blog.api.exception.AlreadyExistsException
+import com.cubetiq.blog.api.exception.UserNotFoundException
 import com.cubetiq.blog.api.infrastructure.model.response.BaseBodyResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,6 +20,34 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
             .body(
                 BaseBodyResponse(
                     status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(AlreadyExistsException::class)
+    fun handleAlreadyExistsException(
+        ex: AlreadyExistsException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.CONFLICT.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    fun handleUserNotFoundException(
+        ex: UserNotFoundException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.NOT_FOUND.value(),
                     message = ex.message
                 )
             )
