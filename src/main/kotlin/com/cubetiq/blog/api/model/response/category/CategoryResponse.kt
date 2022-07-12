@@ -1,7 +1,7 @@
 package com.cubetiq.blog.api.model.response.category
 
 import com.cubetiq.blog.api.model.entity.CategoryEntity
-import com.cubetiq.blog.api.model.response.PostResponse
+import com.cubetiq.blog.api.model.response.post.PostResponse
 
 data class CategoryResponse(
     var id: Long? = null,

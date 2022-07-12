@@ -1,7 +1,7 @@
 package com.cubetiq.blog.api.service
 
 import com.cubetiq.blog.api.model.entity.PostEntity
-import com.cubetiq.blog.api.model.request.PostRequest
+import com.cubetiq.blog.api.model.request.post.PostRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

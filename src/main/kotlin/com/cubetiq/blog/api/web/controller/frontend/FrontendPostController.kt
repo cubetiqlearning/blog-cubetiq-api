@@ -2,15 +2,14 @@ package com.cubetiq.blog.api.web.controller.frontend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
 import com.cubetiq.blog.api.infrastructure.model.response.BodyResponse
-import com.cubetiq.blog.api.model.request.PostRequest
-import com.cubetiq.blog.api.model.response.PostResponse
+import com.cubetiq.blog.api.model.request.post.PostRequest
+import com.cubetiq.blog.api.model.response.post.PostResponse
 import com.cubetiq.blog.api.service.PostService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 

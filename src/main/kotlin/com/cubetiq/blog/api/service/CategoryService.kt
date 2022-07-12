@@ -1,7 +1,7 @@
 package com.cubetiq.blog.api.service
 
 import com.cubetiq.blog.api.model.entity.CategoryEntity
-import com.cubetiq.blog.api.model.request.CategoryRequest
+import com.cubetiq.blog.api.model.request.category.CategoryRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

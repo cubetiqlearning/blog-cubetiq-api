@@ -2,7 +2,7 @@ package com.cubetiq.blog.api.service.implemetation
 
 import com.cubetiq.blog.api.exception.AlreadyExistsException
 import com.cubetiq.blog.api.model.entity.CategoryEntity
-import com.cubetiq.blog.api.model.request.CategoryRequest
+import com.cubetiq.blog.api.model.request.category.CategoryRequest
 import com.cubetiq.blog.api.repository.CategoryRepository
 import com.cubetiq.blog.api.service.CategoryService
 import org.springframework.beans.factory.annotation.Autowired

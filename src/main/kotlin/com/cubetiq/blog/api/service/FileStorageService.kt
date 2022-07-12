@@ -1,6 +1,6 @@
 package com.cubetiq.blog.api.service
 
-import com.cubetiq.blog.api.model.response.UploadResponse
+import com.cubetiq.blog.api.model.response.file.UploadResponse
 import com.cubetiq.blog.api.property.AppProperties
 import com.cubetiq.blog.api.property.StorageProperties
 import com.cubetiq.blog.api.util.FileResourceUtil

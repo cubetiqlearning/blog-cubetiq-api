@@ -2,6 +2,7 @@ package com.cubetiq.blog.api.model.entity
 
 import com.cubetiq.blog.api.constant.TableConstant
 import com.cubetiq.blog.api.infrastructure.model.entity.BaseEntity
+import com.cubetiq.blog.api.module.security.UserAuthDetails
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import org.hibernate.Hibernate
 import javax.persistence.*
@@ -41,6 +42,10 @@ open class UserEntity constructor(
     @JsonManagedReference
     open var post: MutableList<PostEntity>? = mutableListOf(),
 ): BaseEntity<Long>() {
+    fun getUserAuthDetails(): UserAuthDetails {
+        return UserAuthDetails(this)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false

@@ -9,4 +9,6 @@ interface UserRepository : JpaRepository<UserEntity, Long> {
     fun queryByIdAndDeletedAtIsNull(id: Long): UserEntity?
 
     fun queryByUsernameAndDeletedAtIsNull(username: String): UserEntity?
+
+    fun existsByUsernameAndDeletedAtIsNull(username: String): Boolean
 }

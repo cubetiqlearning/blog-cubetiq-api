@@ -2,7 +2,7 @@ package com.cubetiq.blog.api.web.controller.backend
 
 import com.cubetiq.blog.api.constant.RestUriConstant
 import com.cubetiq.blog.api.infrastructure.model.response.BodyResponse
-import com.cubetiq.blog.api.model.request.CategoryRequest
+import com.cubetiq.blog.api.model.request.category.CategoryRequest
 import com.cubetiq.blog.api.model.response.category.AdminCategoryResponse
 import com.cubetiq.blog.api.service.CategoryService
 import io.swagger.annotations.Api

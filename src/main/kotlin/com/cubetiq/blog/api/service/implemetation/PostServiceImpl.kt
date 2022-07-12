@@ -1,7 +1,7 @@
 package com.cubetiq.blog.api.service.implemetation
 
 import com.cubetiq.blog.api.model.entity.PostEntity
-import com.cubetiq.blog.api.model.request.PostRequest
+import com.cubetiq.blog.api.model.request.post.PostRequest
 import com.cubetiq.blog.api.repository.CategoryRepository
 import com.cubetiq.blog.api.repository.PostRepository
 import com.cubetiq.blog.api.repository.UserRepository

@@ -1,4 +1,4 @@
-package com.cubetiq.blog.api.model.request
+package com.cubetiq.blog.api.model.request.post
 
 import com.cubetiq.blog.api.model.entity.PostEntity
 

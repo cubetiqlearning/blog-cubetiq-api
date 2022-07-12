@@ -17,4 +17,8 @@ class UserServiceImpl @Autowired constructor(
     override fun findByUsername(username: String): UserEntity? {
         return userRepository.queryByUsernameAndDeletedAtIsNull(username)
     }
+
+    override fun existsByUsername(username: String): Boolean {
+        return userRepository.existsByUsernameAndDeletedAtIsNull(username)
+    }
 }

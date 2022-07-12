@@ -1,4 +1,4 @@
-package com.cubetiq.blog.api.model.response
+package com.cubetiq.blog.api.model.response.file
 
 data class UploadResponse(
     var uid: String? = null,

@@ -1,4 +1,4 @@
-package com.cubetiq.blog.api.model.request
+package com.cubetiq.blog.api.model.request.category
 
 import com.cubetiq.blog.api.model.entity.CategoryEntity
 
