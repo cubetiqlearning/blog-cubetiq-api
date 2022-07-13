@@ -2,6 +2,7 @@ package com.cubetiq.blog.api.service.implemetation
 
 import com.cubetiq.blog.api.exception.AlreadyExistsException
 import com.cubetiq.blog.api.exception.UserNotFoundException
+import com.cubetiq.blog.api.exception.auth.InvalidCurrentUserException
 import com.cubetiq.blog.api.model.entity.UserEntity
 import com.cubetiq.blog.api.model.request.user.UserAuthRequest
 import com.cubetiq.blog.api.model.response.user.UserLoginResponse
@@ -12,6 +13,7 @@ import com.cubetiq.blog.api.service.UserAuthService
 import com.cubetiq.blog.api.service.UserService
 import com.cubetiq.blog.api.util.TextUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 
@@ -21,6 +23,19 @@ class UserAuthServiceImpl @Autowired constructor(
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
 ) : UserAuthService {
+    override fun getCurrentUser(): UserEntity {
+        return getCurrentUserOrNull() ?: throw InvalidCurrentUserException()
+    }
+
+    override fun getCurrentUserOrNull(): UserEntity? {
+        val authContext = SecurityContextHolder.getContext().authentication ?: return null
+
+        return when (val temp = authContext.details) {
+            is UserAuthDetails -> temp.getUser()
+            else -> null
+        }
+    }
+
     override fun register(request: UserAuthRequest): UserEntity? {
         if (userService.existsByUsername(request.username!!))
             throw AlreadyExistsException("Username already exists!")

@@ -14,6 +14,8 @@ interface PostService {
 
     fun findById(id: Long): PostEntity?
 
+    fun findByIdAndUserId(id: Long, userId: Long): PostEntity?
+
     fun delete(id: Long): PostEntity?
 
     fun softDelete(id: Long): PostEntity?
@@ -21,6 +23,8 @@ interface PostService {
     fun findAllAvailable(): MutableList<PostEntity>
 
     fun findAllAvailable(pageable: Pageable): Page<PostEntity>
+
+    fun findMyPosts(pageable: Pageable): Page<PostEntity>
 
     fun findAllAvailable(categoryId: Long, pageable: Pageable): Page<PostEntity>
 }

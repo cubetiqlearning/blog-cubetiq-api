@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service
 
 @Service
 interface UserAuthService : UserDetailsService {
+    fun getCurrentUser(): UserEntity
+
+    fun getCurrentUserOrNull(): UserEntity?
+
     fun register(request: UserAuthRequest): UserEntity?
 
     fun login(request: UserAuthRequest): UserLoginResponse?

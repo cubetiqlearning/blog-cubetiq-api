@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository
 interface PostRepository : JpaRepository<PostEntity, Long> {
     fun queryByIdAndDeletedAtIsNull(id: Long): PostEntity?
 
+    fun queryByIdAndUserIdAndDeletedAtIsNull(id: Long, userId: Long): PostEntity?
+
+    fun queryAllByUserIdAndDeletedAtIsNull(userId: Long, pageable: Pageable): Page<PostEntity>
+
     fun queryAllByDeletedAtIsNull(): MutableList<PostEntity>
 
     fun queryAllByDeletedAtIsNull(pageable: Pageable): Page<PostEntity>

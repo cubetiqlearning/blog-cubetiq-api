@@ -1,7 +1,9 @@
 package com.cubetiq.blog.api.web
 
 import com.cubetiq.blog.api.exception.AlreadyExistsException
+import com.cubetiq.blog.api.exception.NotFoundException
 import com.cubetiq.blog.api.exception.UserNotFoundException
+import com.cubetiq.blog.api.exception.auth.InvalidCurrentUserException
 import com.cubetiq.blog.api.infrastructure.model.response.BaseBodyResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -48,6 +50,34 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
             .body(
                 BaseBodyResponse(
                     status = HttpStatus.NOT_FOUND.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFoundException(
+        ex: NotFoundException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.NOT_FOUND.value(),
+                    message = ex.message
+                )
+            )
+    }
+
+    @ExceptionHandler(InvalidCurrentUserException::class)
+    fun handleInvalidCurrentUserException(
+        ex: InvalidCurrentUserException,
+    ): ResponseEntity<Any> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(
+                BaseBodyResponse(
+                    status = HttpStatus.BAD_REQUEST.value(),
                     message = ex.message
                 )
             )
