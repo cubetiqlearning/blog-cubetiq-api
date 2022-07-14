@@ -6,6 +6,7 @@ object RestUriConstant {
     object Backend {
         const val INDEX = "$IND/backend"
         const val CATEGORY = "$INDEX/category"
+        const val CONFIGURATION = "$INDEX/configuration"
     }
 
     object Frontend {
@@ -13,5 +14,6 @@ object RestUriConstant {
         const val POST = "$INDEX/post"
         const val CATEGORY = "$INDEX/category"
         const val AUTH = "$INDEX/auth"
+        const val CONFIGURATION = "$INDEX/configuration"
     }
 }

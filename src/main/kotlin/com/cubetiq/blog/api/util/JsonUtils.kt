@@ -1,5 +1,6 @@
 package com.cubetiq.blog.api.util
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -14,7 +15,7 @@ object JsonUtils {
         return objectMapper!!
     }
 
-    private fun parseObjectToString(obj: Any?): String? {
+    fun parseObjectToString(obj: Any?): String? {
         if (obj == null) return null
         return when (obj) {
             is String -> obj
@@ -33,5 +34,10 @@ object JsonUtils {
             is JsonNode -> any
             else -> this.getObjectMapper().readTree(this.parseObjectToString(any))
         }
+    }
+
+    fun <T> fromJson(json: String?, typeRef: TypeReference<T>): T? {
+        if (json == null) return null
+        return jacksonObjectMapper().readValue(json, typeRef)
     }
 }
