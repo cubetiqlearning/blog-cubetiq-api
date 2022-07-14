@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.util.FileCopyUtils
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -22,6 +23,7 @@ class OtherFileController @Autowired constructor(
     private val fileStorageService: FileStorageService,
 ) {
     @PostMapping
+    @PreAuthorize("""hasRole("USER")""")
     fun uploadFile(
         @RequestPart("file") file: MultipartFile
     ): ResponseEntity<Any> {
